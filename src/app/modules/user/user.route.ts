@@ -5,9 +5,11 @@ import { UserControllers } from "./user.controller";
 const router = express.Router();
 
 router.post(
-  "/signup",
+  "/register",
   validationRequest(UserValidation.userValidationSchema),
   UserControllers.createUser
 );
+
+router.get('/api/users', UserControllers.getAllUsersFromDB)
 
 export const UserRoutes = router;
