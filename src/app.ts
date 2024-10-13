@@ -11,7 +11,7 @@ const app: Application = express();
 //parsers
 app.use(express.json());
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000", "https://recipe-sharing-community-theta.vercel.app"],
     credentials: true,
 }));
 
