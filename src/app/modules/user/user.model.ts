@@ -4,54 +4,60 @@ import config from "../../config";
 import bcrypt from "bcrypt";
 
 const userSchema = new Schema<TUser>(
-    {
-        name: { type: String, required: true, trim: true },
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-            lowercase: true,
-            trim: true,
-        },
-        password: { type: String, required: true },
-        phone: { type: String },
-        role: { type: String, enum: ["admin", "user"], default: "user" },
-        address: { type: String, required: true },
-        image: {type: String, required: true}
+  {
+    name: { type: String, required: true, trim: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
     },
-    {
-        
-        toJSON: {
-            transform: (doc, ret) => {
-                delete ret.password;
-                return ret;
-            },
-        },
-    }
+    password: { type: String },
+    phone: { type: String },
+    role: { type: String, enum: ["admin", "user"], default: "user" },
+    address: { type: String },
+    image: { type: String, required: true },
+  },
+  {
+    toJSON: {
+      transform: (doc, ret) => {
+        delete ret.password;
+        return ret;
+      },
+    },
+  }
 );
 
 userSchema.pre("save", async function (next) {
-    const user = this;
+  const user = this;
 
-    user.password = await bcrypt.hash(
+  if (user.password && this.isModified("password")) {
+    try {
+      user.password = await bcrypt.hash(
         user.password,
         Number(config.bcrypt_salt_rounds)
-    );
-    next();
+      );
+    } catch (error: any) {
+      return next(error);
+    }
+  }
+
+  next();
 });
 
 userSchema.post("save", function (doc, next) {
-    doc.password = "";
+  doc.password = "";
 
-    next();
+  next();
 });
 
-userSchema.set('toJSON', {
-    transform: (doc, ret) => {
-        delete ret.password
-        delete ret.__v;
-        return ret
-    }
-})
+userSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    delete ret.password;
+    delete ret.__v;
+    return ret;
+  },
+});
 
 export const User = model<TUser>("User", userSchema);

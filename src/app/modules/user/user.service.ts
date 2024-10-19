@@ -8,7 +8,7 @@ const createUserIntoDB = async(userData: TUser) => {
 
 const getAllUserFromDB = async () => {
     const result = await User.find()
-    console.log(result);
+
     return result
 }
 

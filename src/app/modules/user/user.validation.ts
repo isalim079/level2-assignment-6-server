@@ -8,18 +8,14 @@ const userValidationSchema = z.object({
         email: z.string().email({
             message: "Invalid email address",
         }),
-        password: z.string({
-            invalid_type_error: "Password must be a string",
-        }),
+        password: z.string().optional(),
         image: z.string({
             invalid_type_error: "Please upload your image",
         }),
 
         phone: z.string().optional(),
         role: z.enum(["admin", "user"]),
-        address: z.string().nonempty({
-            message: "Address is required",
-        }),
+        address: z.string().optional(),
     }),
 });
 
