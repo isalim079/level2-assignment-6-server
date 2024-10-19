@@ -15,20 +15,38 @@ const createRecipeDataIntoDB = async (req: Request, res: Response) => {
   }
 };
 
-const getAllRecipesFromDB = async (rq: Request, res: Response) => {
-    try {
-        const result = await recipeServices.getAllRecipesFromDB();
-        res.status(200).json({
-            success: true,
-            message: "All recipes fetched successfully",
-            data: result,
-        });
-    } catch (error) {
-        console.log(error);
-    }
+const getAllRecipesFromDB = async (req: Request, res: Response) => {
+  try {
+    const result = await recipeServices.getAllRecipesFromDB();
+    res.status(200).json({
+      success: true,
+      message: "All recipes fetched successfully",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getMyRecipeFromDB = async (req: Request, res: Response) => {
+  try {
+
+    const {email }= req.query
+
+    const result = await recipeServices.getMyRecipeFromDB(email as string);
+
+    res.status(200).json({
+      success: true,
+      message: "Recipe retrieved by email success",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const recipeController = {
-    createRecipeDataIntoDB,
-    getAllRecipesFromDB,
+  createRecipeDataIntoDB,
+  getAllRecipesFromDB,
+  getMyRecipeFromDB,
 };
