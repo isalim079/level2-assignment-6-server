@@ -5,7 +5,7 @@ export type TComments = {
 
 export type TRatings = {
     email: string;
-    ratings: string;
+    ratings: number;
 }
 
 export type TRecipe = {

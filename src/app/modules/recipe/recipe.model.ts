@@ -8,7 +8,7 @@ const commentSchema = new Schema<TComments>({
 
 const ratingsSchema = new Schema<TRatings>({
     email: { type: String, required: true },
-    ratings: { type: String, required: true },
+    ratings: { type: Number, required: true },
   });
 
 const recipeSchema = new Schema<TRecipe>({

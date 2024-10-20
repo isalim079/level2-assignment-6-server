@@ -8,7 +8,7 @@ const createRecipeIntoDB = async (recipeData: TRecipe) => {
 };
 
 const getAllRecipesFromDB = async () => {
-  const result = await Recipe.find().sort({rating: -1});
+  const result = await Recipe.find().sort({ rating: -1 });
   return result;
 };
 
@@ -17,21 +17,39 @@ const getMyRecipeFromDB = async (email: string) => {
   return result;
 };
 
-const deleteMyRecipeFromDB = async(id: string) => {
-    const objectId = new Types.ObjectId(id)
-    const result = await Recipe.deleteOne(objectId)
-    return result
-}
+const deleteMyRecipeFromDB = async (id: string) => {
+  const objectId = new Types.ObjectId(id);
+  const result = await Recipe.deleteOne(objectId);
+  return result;
+};
 
-const createRatingsData = async(id: string, updateInfo: TRatings) => {
-    const objectId = new Types.ObjectId(id)
+const createRatingsData = async (id: string, updateInfo: TRatings) => {
+  const objectId = new Types.ObjectId(id);
+
+  const recipe = await Recipe.findById(objectId);
+
+  const existingRating = recipe?.ratingsData?.find(
+    (rating) => rating.email === updateInfo.email
+  );
+
+  if (!existingRating) {
     const result = await Recipe.findOneAndUpdate(
-        {_id: objectId},
-        {$push: {ratingsData: updateInfo}},
-        {new: true}
-    )
-    return result
-}
+      { _id: objectId },
+      { $push: { ratingsData: updateInfo } },
+      { new: true }
+    );
+    return result;
+  }
+
+  if (existingRating) {
+    const result = await Recipe.findOneAndUpdate(
+      { _id: objectId, "ratingsData.email": updateInfo.email },
+      { $set: { "ratingsData.$.ratings": updateInfo.ratings } },
+      { new: true }
+    );
+    return result;
+  }
+};
 
 export const recipeServices = {
   createRecipeIntoDB,
