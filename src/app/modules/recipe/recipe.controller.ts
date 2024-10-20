@@ -30,8 +30,7 @@ const getAllRecipesFromDB = async (req: Request, res: Response) => {
 
 const getMyRecipeFromDB = async (req: Request, res: Response) => {
   try {
-
-    const {email }= req.query
+    const { email } = req.query;
 
     const result = await recipeServices.getMyRecipeFromDB(email as string);
 
@@ -45,8 +44,43 @@ const getMyRecipeFromDB = async (req: Request, res: Response) => {
   }
 };
 
+const deleteMyRecipeFromDB = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await recipeServices.deleteMyRecipeFromDB(id);
+
+    if (result.deletedCount === 1) {
+      res.status(200).json({
+        success: true,
+        message: "Your recipe deleted successfully!",
+        data: null,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const createRatingsData = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const ratingInfo = req.body;
+    const result = await recipeServices.createRatingsData(id, ratingInfo)
+
+    res.status(200).json({
+      success: true,
+      message: "Rate the recipe success!",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const recipeController = {
   createRecipeDataIntoDB,
   getAllRecipesFromDB,
   getMyRecipeFromDB,
+  deleteMyRecipeFromDB,
+  createRatingsData
 };

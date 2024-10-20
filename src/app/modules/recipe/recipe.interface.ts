@@ -3,6 +3,11 @@ export type TComments = {
     comments: string;
 }
 
+export type TRatings = {
+    email: string;
+    ratings: string;
+}
+
 export type TRecipe = {
     image: string;
     title: string;
@@ -12,6 +17,7 @@ export type TRecipe = {
     profileImg: string;
     rating: number;
     comments?: TComments[];
+    ratingsData?: TRatings[];
     upvote: number;
     downvote: number;
 }
