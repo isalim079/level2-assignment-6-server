@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { TRatings, TRecipe } from "./recipe.interface";
+import { TRatings, TRecipe, TUpVote } from "./recipe.interface";
 import { Recipe } from "./recipe.model";
 
 const createRecipeIntoDB = async (recipeData: TRecipe) => {
@@ -8,7 +8,7 @@ const createRecipeIntoDB = async (recipeData: TRecipe) => {
 };
 
 const getAllRecipesFromDB = async () => {
-  const result = await Recipe.find().sort({ rating: -1 });
+  const result = await Recipe.find();
   return result;
 };
 
@@ -51,10 +51,38 @@ const createRatingsData = async (id: string, updateInfo: TRatings) => {
   }
 };
 
+const createUpVoteData = async (id: string, updateInfo: TUpVote) => {
+  const objectId = new Types.ObjectId(id)
+  const upVoteId = await Recipe.findById(objectId)
+
+  const existingUpvote = upVoteId?.upvote.find(upvote => upvote.email === updateInfo.email)
+
+  if (!existingUpvote) {
+    const result = await Recipe.findOneAndUpdate(
+      { _id: objectId },
+      { $push: { upvote: updateInfo } },
+      { new: true }
+    );
+    return result;
+  }
+
+  if (existingUpvote) {
+    const result = await Recipe.findOneAndUpdate(
+      { _id: objectId, "upvote.email": updateInfo.email },
+      { $set: { "upvote.$.upvote": updateInfo.upvote } },
+      { new: true }
+    );
+    return result;
+  }
+
+
+};
+
 export const recipeServices = {
   createRecipeIntoDB,
   getAllRecipesFromDB,
   getMyRecipeFromDB,
   deleteMyRecipeFromDB,
   createRatingsData,
+  createUpVoteData,
 };

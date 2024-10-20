@@ -7,6 +7,7 @@ router.get('/allRecipes', recipeController.getAllRecipesFromDB)
 router.get('/myRecipe', recipeController.getMyRecipeFromDB)
 router.delete('/myRecipe/:id', recipeController.deleteMyRecipeFromDB)
 router.patch('/allRecipes/:id/ratings', recipeController.createRatingsData)
+router.patch('/allRecipes/:id/upvote', recipeController.createUpVoteData)
 
 
 export const recipeRoutes = router

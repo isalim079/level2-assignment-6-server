@@ -77,10 +77,27 @@ const createRatingsData = async (req: Request, res: Response) => {
   }
 };
 
+const createUpVoteData = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const upVoteInfo = req.body;
+    const result = await recipeServices.createUpVoteData(id, upVoteInfo)
+
+    res.status(200).json({
+      success: true,
+      message: "Recipe Liked!",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const recipeController = {
   createRecipeDataIntoDB,
   getAllRecipesFromDB,
   getMyRecipeFromDB,
   deleteMyRecipeFromDB,
-  createRatingsData
+  createRatingsData,
+  createUpVoteData
 };
