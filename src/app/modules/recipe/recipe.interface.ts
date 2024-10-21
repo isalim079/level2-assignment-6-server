@@ -13,6 +13,11 @@ export type TUpVote = {
     upvote: boolean;
 }
 
+export type TDownVote = {
+    email: string;
+    downvote: boolean;
+}
+
 export type TRecipe = {
     image: string;
     title: string;
@@ -24,5 +29,5 @@ export type TRecipe = {
     comments?: TComments[];
     ratingsData?: TRatings[];
     upvote: TUpVote[];
-    downvote: number;
+    downvote: TDownVote[];
 }

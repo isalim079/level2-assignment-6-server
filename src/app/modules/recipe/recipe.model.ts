@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { TComments, TRatings, TRecipe, TUpVote } from "./recipe.interface";
+import { TComments, TDownVote, TRatings, TRecipe, TUpVote } from "./recipe.interface";
 
 const commentSchema = new Schema<TComments>({
     email: { type: String, required: true },
@@ -16,6 +16,11 @@ const upVoteSchema = new Schema<TUpVote>({
     upvote: { type: Boolean, required: true },
   });
 
+const downVoteSchema = new Schema<TDownVote>({
+    email: { type: String, required: true },
+    downvote: { type: Boolean, required: true },
+  });
+
 const recipeSchema = new Schema<TRecipe>({
   image: { type: String, required: true },
   title: { type: String, required: true },
@@ -27,7 +32,7 @@ const recipeSchema = new Schema<TRecipe>({
   comments: { type: [commentSchema], default: [] },
   ratingsData: { type: [ratingsSchema], default: [] },
   upvote: { type: [upVoteSchema], default: [] },
-  downvote: { type: Number, default: 0 },
+  downvote: { type: [downVoteSchema], default: [] },
 });
 
 export const Recipe = model<TRecipe>("recipe", recipeSchema);

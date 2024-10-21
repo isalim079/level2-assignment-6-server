@@ -65,7 +65,7 @@ const createRatingsData = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const ratingInfo = req.body;
-    const result = await recipeServices.createRatingsData(id, ratingInfo)
+    const result = await recipeServices.createRatingsData(id, ratingInfo);
 
     res.status(200).json({
       success: true,
@@ -81,11 +81,27 @@ const createUpVoteData = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const upVoteInfo = req.body;
-    const result = await recipeServices.createUpVoteData(id, upVoteInfo)
+    const result = await recipeServices.createUpVoteData(id, upVoteInfo);
 
     res.status(200).json({
       success: true,
       message: "Recipe Liked!",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const createDownVoteData = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const downVoteInfo = req.body;
+    const result = await recipeServices.createDownVoteData(id, downVoteInfo);
+
+    res.status(200).json({
+      success: true,
+      message: "Recipe Disliked!",
       data: result,
     });
   } catch (error) {
@@ -99,5 +115,6 @@ export const recipeController = {
   getMyRecipeFromDB,
   deleteMyRecipeFromDB,
   createRatingsData,
-  createUpVoteData
+  createUpVoteData,
+  createDownVoteData
 };
