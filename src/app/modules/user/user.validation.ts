@@ -13,7 +13,7 @@ const userValidationSchema = z.object({
             invalid_type_error: "Please upload your image",
         }),
 
-        phone: z.string().optional(),
+        resetToken: z.string().optional(),
         role: z.enum(["admin", "user"]),
         address: z.string().optional(),
     }),

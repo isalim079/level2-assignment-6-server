@@ -56,9 +56,23 @@ const getEmailFromUsersDB = catchAsync(async (req, res) => {
   });
 });
 
+const resetPassword= catchAsync(async (req, res) => {
+  // const {email} = req.query;
+  const {email, password} = req.body;
+  const result = await userServices.resetPassword(email, password);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Reset password saved successfully",
+    data: result,
+  });
+  // console.log(email, password);
+})
+
 
 export const UserControllers = {
   createUser,
   getAllUsersFromDB,
   getEmailFromUsersDB,
+  resetPassword,
 };

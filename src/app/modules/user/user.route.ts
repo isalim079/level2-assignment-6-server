@@ -12,7 +12,7 @@ router.post(
 );
 
 router.get("/api/users", auth("admin"), UserControllers.getAllUsersFromDB);
-
 router.get("/api/users/email", UserControllers.getEmailFromUsersDB);
+router.post('/reset-password', UserControllers.resetPassword)
 
 export const UserRoutes = router;
