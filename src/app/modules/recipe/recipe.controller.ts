@@ -109,6 +109,22 @@ const createDownVoteData = async (req: Request, res: Response) => {
   }
 };
 
+const createCommentsData = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const commentsInfo = req.body;
+    const result = await recipeServices.createCommentsData(id, commentsInfo);
+
+    res.status(200).json({
+      success: true,
+      message: "Comment success!",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const recipeController = {
   createRecipeDataIntoDB,
   getAllRecipesFromDB,
@@ -116,5 +132,6 @@ export const recipeController = {
   deleteMyRecipeFromDB,
   createRatingsData,
   createUpVoteData,
-  createDownVoteData
+  createDownVoteData,
+  createCommentsData,
 };

@@ -17,7 +17,7 @@ const loginUser = async (payload: TLoginUser) => {
   // check password
   const isPasswordMatched = await bcrypt.compare(
     payload?.password,
-    isUserEmailExists?.password
+    isUserEmailExists?.password || ""
   );
 
   if (!isPasswordMatched) {
@@ -41,7 +41,6 @@ const loginUser = async (payload: TLoginUser) => {
       email: isUserEmailExists.email,
       image: isUserEmailExists.image,
       role: isUserEmailExists.role,
-      phone: isUserEmailExists.phone,
       address: isUserEmailExists.address,
     },
     accessToken,

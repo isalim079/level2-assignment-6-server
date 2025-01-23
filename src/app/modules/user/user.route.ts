@@ -2,6 +2,7 @@ import express from "express";
 import validationRequest from "../../middlewares/validationRequest";
 import { UserValidation } from "./user.validation";
 import { UserControllers } from "./user.controller";
+import auth from "../../middlewares/auth";
 const router = express.Router();
 
 router.post(
@@ -10,6 +11,6 @@ router.post(
   UserControllers.createUser
 );
 
-router.get('/api/users', UserControllers.getAllUsersFromDB)
+router.get("/api/users", auth("admin"), UserControllers.getAllUsersFromDB);
 
 export const UserRoutes = router;

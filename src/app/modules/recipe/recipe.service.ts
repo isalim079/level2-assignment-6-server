@@ -1,5 +1,11 @@
 import { Types } from "mongoose";
-import { TDownVote, TRatings, TRecipe, TUpVote } from "./recipe.interface";
+import {
+  TComments,
+  TDownVote,
+  TRatings,
+  TRecipe,
+  TUpVote,
+} from "./recipe.interface";
 import { Recipe } from "./recipe.model";
 
 const createRecipeIntoDB = async (recipeData: TRecipe) => {
@@ -105,6 +111,17 @@ const createDownVoteData = async (id: string, updateInfo: TDownVote) => {
   }
 };
 
+const createCommentsData = async (id: string, updateInfo: TComments) => {
+  const objectId = new Types.ObjectId(id);
+
+  const result = await Recipe.findOneAndUpdate(
+    { _id: objectId },
+    { $push: { comments: updateInfo } },
+    { new: true }
+  );
+  return result;
+};
+
 export const recipeServices = {
   createRecipeIntoDB,
   getAllRecipesFromDB,
@@ -113,4 +130,5 @@ export const recipeServices = {
   createRatingsData,
   createUpVoteData,
   createDownVoteData,
+  createCommentsData,
 };

@@ -9,10 +9,11 @@ import { NextFunction, Request, Response } from "express";
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const bearerToken = req.headers.authorization;
+    
+    // const token = bearerToken?.split(" ")[1];
+    // console.log(token);
 
-    const token = bearerToken?.split(" ")[1];
-
-    if (!token) {
+    if (!bearerToken) {
       res.status(httpStatus.UNAUTHORIZED).json({
         success: false,
         statusCode: 401,
@@ -24,7 +25,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     // check if the token is valid
     jwt.verify(
-      token,
+      bearerToken,
       config.jwt_access_secret as string,
       function (err, decoded) {
         if (err) {
