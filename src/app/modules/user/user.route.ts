@@ -13,4 +13,6 @@ router.post(
 
 router.get("/api/users", auth("admin"), UserControllers.getAllUsersFromDB);
 
+router.get("/api/users/email", UserControllers.getEmailFromUsersDB);
+
 export const UserRoutes = router;

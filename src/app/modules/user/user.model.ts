@@ -14,7 +14,7 @@ const userSchema = new Schema<TUser>(
       trim: true,
     },
     password: { type: String },
-    phone: { type: String },
+  
     role: { type: String, enum: ["admin", "user"], default: "user" },
     address: { type: String },
     image: { type: String, required: true },

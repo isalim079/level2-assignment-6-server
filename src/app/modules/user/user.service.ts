@@ -8,11 +8,16 @@ const createUserIntoDB = async(userData: TUser) => {
 
 const getAllUserFromDB = async () => {
     const result = await User.find()
+    return result
+}
 
+const getEmailFromUsers = async () => {
+    const result = await User.find().select('email')
     return result
 }
 
 export const userServices = {
     createUserIntoDB,
-    getAllUserFromDB
+    getAllUserFromDB,
+    getEmailFromUsers,
 }

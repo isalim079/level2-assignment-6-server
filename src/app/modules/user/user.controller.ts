@@ -38,7 +38,27 @@ const getAllUsersFromDB = catchAsync(async (req, res) => {
   });
 });
 
+const getEmailFromUsersDB = catchAsync(async (req, res) => {
+  const result = await userServices.getEmailFromUsers();
+  if (result.length === 0) {
+    sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: "No Email Found",
+      data: result,
+    });
+  }
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Emails retrieved successfully",
+    data: result,
+  });
+});
+
+
 export const UserControllers = {
   createUser,
-  getAllUsersFromDB
+  getAllUsersFromDB,
+  getEmailFromUsersDB,
 };
