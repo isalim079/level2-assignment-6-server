@@ -6,6 +6,13 @@ const createLoggedUserInfo = async (userData: TLoginUser) => {
   return result;
 };
 
+const deleteLoggedUserInfo = async(id: string) => {
+    console.log(id);
+    const result = await LoggedUserInfo.deleteOne({ _id: id });
+    return result
+}
+
 export const loggedUserServices = {
   createLoggedUserInfo,
+  deleteLoggedUserInfo
   };

@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { loggedUserServices } from "./loggedUser.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
@@ -19,6 +19,19 @@ const createLoggedUserInfo: RequestHandler = async (req, res, next) => {
   }
 };
 
+const deleteLoggedUserInfo = async (req: Request, res: Response) => {
+  const { _id } = req.body;
+  const result = await loggedUserServices.deleteLoggedUserInfo(_id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User deleted successfully",
+    data: result,
+  });
+};
+
 export const loggedUserController = {
-   createLoggedUserInfo
-  };
+  createLoggedUserInfo,
+  deleteLoggedUserInfo
+};
