@@ -8,6 +8,5 @@ export type TUser = {
     image: string;
     role: "admin" | "user";
     address?: string;
-    resetToken?: string;
 };
 export type TUserRole = keyof typeof USER_ROLE

@@ -5,6 +5,7 @@ import notFound from "./app/middlewares/notFound";
 import { AuthRoutes } from "./app/modules/auth/auth.route";
 import { UserRoutes } from "./app/modules/user/user.route";
 import { recipeRoutes } from "./app/modules/recipe/recipe.route";
+import { loggedUserInfoRoute } from "./app/modules/loggedUser/loggedUser.route";
 
 const app: Application = express();
 
@@ -19,6 +20,7 @@ app.use(cors({
 app.use('/', UserRoutes)
 app.use('/', AuthRoutes)
 app.use('/', recipeRoutes)
+app.use('/', loggedUserInfoRoute)
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Recipe sharing community Server is running correctly..!");

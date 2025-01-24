@@ -14,7 +14,6 @@ const userSchema = new Schema<TUser>(
       trim: true,
     },
     password: { type: String },
-    resetToken: { type: String },
   
     role: { type: String, enum: ["admin", "user"], default: "user" },
     address: { type: String },

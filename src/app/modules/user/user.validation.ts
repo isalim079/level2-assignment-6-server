@@ -12,8 +12,6 @@ const userValidationSchema = z.object({
         image: z.string({
             invalid_type_error: "Please upload your image",
         }),
-
-        resetToken: z.string().optional(),
         role: z.enum(["admin", "user"]),
         address: z.string().optional(),
     }),
