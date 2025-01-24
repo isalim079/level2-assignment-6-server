@@ -2,6 +2,7 @@ import { Request, RequestHandler, Response } from "express";
 import { loggedUserServices } from "./loggedUser.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
+import catchAsync from "../../utils/catchAsync";
 
 const createLoggedUserInfo: RequestHandler = async (req, res, next) => {
   try {
@@ -31,7 +32,26 @@ const deleteLoggedUserInfo = async (req: Request, res: Response) => {
   });
 };
 
+const getLoggedUser = catchAsync(async (req, res) => {
+  const result = await loggedUserServices.getLoggedUser();
+  if (result.length === 0) {
+    sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: "No User Found",
+      data: result,
+    });
+  }
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Users retrieved successfully",
+    data: result,
+  });
+});
+
 export const loggedUserController = {
   createLoggedUserInfo,
-  deleteLoggedUserInfo
+  deleteLoggedUserInfo,
+  getLoggedUser
 };
