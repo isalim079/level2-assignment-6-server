@@ -8,5 +8,7 @@ export type TUser = {
     image: string;
     role: "admin" | "user";
     address?: string;
+    userType?: "free" | "premium";
+    totalSpends?: number;
 };
 export type TUserRole = keyof typeof USER_ROLE

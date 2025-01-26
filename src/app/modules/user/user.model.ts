@@ -17,6 +17,8 @@ const userSchema = new Schema<TUser>(
   
     role: { type: String, enum: ["admin", "user"], default: "user" },
     address: { type: String },
+    totalSpends: { type: Number, default: 0 },
+    userType: { type: String, enum: ["free", "premium"], default: "free" },
     image: { type: String, required: true },
   },
   {

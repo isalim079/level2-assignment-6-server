@@ -14,6 +14,8 @@ const userValidationSchema = z.object({
         }),
         role: z.enum(["admin", "user"]),
         address: z.string().optional(),
+        userType: z.enum(["free", "premium"]).optional(),
+        totalSpends: z.number().optional(),
     }),
 });
 
