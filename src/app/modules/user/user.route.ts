@@ -14,5 +14,7 @@ router.post(
 router.get("/api/users", auth("admin"), UserControllers.getAllUsersFromDB);
 router.get("/api/users/email", UserControllers.getEmailFromUsersDB);
 router.post('/reset-password', UserControllers.resetPassword)
+router.put("/api/users/:email", UserControllers.updateUserInfo)
+router.get("/api/getMe/:email", auth('user', 'admin'), UserControllers.getMeFromDB)
 
 export const UserRoutes = router;

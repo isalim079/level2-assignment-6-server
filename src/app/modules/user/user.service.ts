@@ -27,9 +27,21 @@ const resetPassword = async (email: string, password: string) => {
   return updatePass;
 };
 
+const updateUserInfo = async (email: string, updateInfo: Partial<TUser>) => {
+  const result = await User.updateOne({email: email}, updateInfo, {new: true})
+  return result
+}
+
+const getMeFromDB = async(email: string) => {
+  const result = await User.findOne({email: email})
+  return result
+}
+
 export const userServices = {
   createUserIntoDB,
   getAllUserFromDB,
   getEmailFromUsers,
   resetPassword,
+  updateUserInfo,
+  getMeFromDB
 };

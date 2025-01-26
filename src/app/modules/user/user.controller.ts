@@ -69,10 +69,35 @@ const resetPassword= catchAsync(async (req, res) => {
   // console.log(email, password);
 })
 
+const updateUserInfo = catchAsync(async (req, res) => {
+  const {email} = req.params;
+  const updateInfo = req.body;
+  const result = await userServices.updateUserInfo(email, updateInfo)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Info Updated successfully",
+    data: result,
+  });
+})
+
+const getMeFromDB = catchAsync(async(req, res) => {
+  const {email} = req.params;
+  const result = await userServices.getMeFromDB(email);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Getting me successful",
+    data: result,
+  });
+})
+
 
 export const UserControllers = {
   createUser,
   getAllUsersFromDB,
   getEmailFromUsersDB,
   resetPassword,
+  updateUserInfo,
+  getMeFromDB
 };
