@@ -125,6 +125,37 @@ const createCommentsData = async (req: Request, res: Response) => {
   }
 };
 
+const deleteRecipeComment = async (req: Request, res: Response) => {
+  const { recipeId, commentId } = req.params;
+  try {
+    const result = await recipeServices.deleteCommentData(recipeId, commentId);
+
+    res.status(200).json({
+      success: true,
+      message: "Comment deleted success!",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateComments = async (req: Request, res: Response) => {
+  const { recipeId, commentId } = req.params;
+  const { updatedComment } = req.body;
+  const result = await recipeServices.updateCommentData(
+    recipeId,
+    commentId,
+    updatedComment
+  );
+
+  res.status(200).json({
+    success: true,
+    message: "Comment updated success!",
+    data: result,
+  });
+};
+
 export const recipeController = {
   createRecipeDataIntoDB,
   getAllRecipesFromDB,
@@ -134,4 +165,6 @@ export const recipeController = {
   createUpVoteData,
   createDownVoteData,
   createCommentsData,
+  deleteRecipeComment,
+  updateComments,
 };

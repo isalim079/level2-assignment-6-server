@@ -122,6 +122,31 @@ const createCommentsData = async (id: string, updateInfo: TComments) => {
   return result;
 };
 
+const deleteCommentData = async (recipeId: string, commentId: string) => {
+  const updatedRecipe = await Recipe.findByIdAndUpdate(
+    recipeId,
+    {
+      $pull: { comments: { _id: commentId } },
+    },
+    { new: true }
+  );
+
+  return updatedRecipe;
+};
+
+const updateCommentData = async (
+  recipeId: string,
+  commentId: string,
+  updatedComment: string
+) => {
+  const result = await Recipe.updateOne(
+    { _id: recipeId, "comments._id": commentId }, 
+    { $set: { "comments.$.comments": updatedComment } } 
+  );
+
+  return result;
+};
+
 export const recipeServices = {
   createRecipeIntoDB,
   getAllRecipesFromDB,
@@ -131,4 +156,6 @@ export const recipeServices = {
   createUpVoteData,
   createDownVoteData,
   createCommentsData,
+  deleteCommentData,
+  updateCommentData,
 };

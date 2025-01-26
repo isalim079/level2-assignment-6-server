@@ -10,5 +10,7 @@ router.patch("/allRecipes/:id/ratings", recipeController.createRatingsData);
 router.patch("/allRecipes/:id/upvote", recipeController.createUpVoteData);
 router.patch("/allRecipes/:id/downvote", recipeController.createDownVoteData);
 router.patch("/allRecipes/:id/comments", recipeController.createCommentsData);
+router.delete("/recipes/:recipeId/comments/:commentId", recipeController.deleteRecipeComment);
+router.put("/recipes/:recipeId/comments/:commentId", recipeController.updateComments);
 
 export const recipeRoutes = router;

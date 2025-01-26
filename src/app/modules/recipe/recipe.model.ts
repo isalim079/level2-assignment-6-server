@@ -2,6 +2,7 @@ import { model, Schema } from "mongoose";
 import { TComments, TDownVote, TRatings, TRecipe, TUpVote } from "./recipe.interface";
 
 const commentSchema = new Schema<TComments>({
+    name: { type: String, required: true },
     email: { type: String, required: true },
     comments: { type: String, required: true },
   });
