@@ -1,4 +1,4 @@
-import { TUser } from "./user.interface";
+import { TSubscriptionInfo, TUser } from "./user.interface";
 import { User } from "./user.model";
 import bcrypt from "bcrypt";
 
@@ -37,11 +37,23 @@ const getMeFromDB = async(email: string) => {
   return result
 }
 
+const updateUserType = async(email: string, userType: string) => {
+  const updateUserType = await User.findOneAndUpdate({email: email}, {$set: {userType: userType}}, {new: true})
+  return updateUserType
+}
+
+const createSubscriptionInfo = async(email: string, subscriptionInfo: TSubscriptionInfo) => {
+  const result = await User.findOneAndUpdate({email: email}, {$set: {subScriptionInfo: subscriptionInfo}} , {new: true})
+  return result
+}
+
 export const userServices = {
   createUserIntoDB,
   getAllUserFromDB,
   getEmailFromUsers,
   resetPassword,
   updateUserInfo,
-  getMeFromDB
+  getMeFromDB,
+  updateUserType,
+  createSubscriptionInfo
 };

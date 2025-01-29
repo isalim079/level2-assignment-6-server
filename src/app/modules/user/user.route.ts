@@ -16,5 +16,7 @@ router.get("/api/users/email", UserControllers.getEmailFromUsersDB);
 router.post('/reset-password', UserControllers.resetPassword)
 router.put("/api/users/:email", UserControllers.updateUserInfo)
 router.get("/api/getMe/:email", auth('user', 'admin'), UserControllers.getMeFromDB)
+router.patch("/api/users/:email/userType",  UserControllers.updateUserType)
+router.patch("/api/users/:email/subscriptionInfo",  UserControllers.createSubscriptionInfo)
 
 export const UserRoutes = router;

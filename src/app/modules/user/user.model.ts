@@ -1,7 +1,14 @@
 import { Schema, model } from "mongoose";
-import { TUser } from "./user.interface";
+import { TSubscriptionInfo, TUser } from "./user.interface";
 import config from "../../config";
 import bcrypt from "bcrypt";
+
+const subscriptionInfoSchema = new Schema<TSubscriptionInfo>({
+  tnxId: { type: String },
+  purchaseTime: { type: String },
+  expiryTime: { type: String },
+  amount: { type: Number },
+})
 
 const userSchema = new Schema<TUser>(
   {
@@ -18,6 +25,7 @@ const userSchema = new Schema<TUser>(
     role: { type: String, enum: ["admin", "user"], default: "user" },
     address: { type: String },
     totalSpends: { type: Number, default: 0 },
+    subScriptionInfo: { type: [subscriptionInfoSchema]},
     userType: { type: String, enum: ["free", "premium"], default: "free" },
     image: { type: String, required: true },
   },

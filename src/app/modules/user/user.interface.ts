@@ -1,5 +1,11 @@
 import { USER_ROLE } from "./user.constant";
 
+export type TSubscriptionInfo = {
+    tnxId: string;
+    purchaseTime: string;
+    expiryTime: string;
+    amount: number
+}
 
 export type TUser = {
     name: string;
@@ -10,5 +16,6 @@ export type TUser = {
     address?: string;
     userType?: "free" | "premium";
     totalSpends?: number;
+    subScriptionInfo?: TSubscriptionInfo[]
 };
 export type TUserRole = keyof typeof USER_ROLE

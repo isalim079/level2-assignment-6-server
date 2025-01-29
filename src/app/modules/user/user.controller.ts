@@ -92,6 +92,30 @@ const getMeFromDB = catchAsync(async(req, res) => {
   });
 })
 
+const updateUserType = catchAsync(async(req, res) => {
+  const {email} = req.params
+  const {userType} = req.body
+  const result = await userServices.updateUserType(email, userType)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "user type updated",
+    data: result,
+  });
+})
+
+const createSubscriptionInfo = catchAsync(async (req, res) => {
+  const {email} = req.params
+  const subscriptionInfo = req.body;
+  const result = await userServices.createSubscriptionInfo(email, subscriptionInfo)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "subscription info saved",
+    data: result,
+  });
+})
+
 
 export const UserControllers = {
   createUser,
@@ -99,5 +123,7 @@ export const UserControllers = {
   getEmailFromUsersDB,
   resetPassword,
   updateUserInfo,
-  getMeFromDB
+  getMeFromDB,
+  updateUserType,
+  createSubscriptionInfo
 };

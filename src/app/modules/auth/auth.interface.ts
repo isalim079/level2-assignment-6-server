@@ -5,5 +5,6 @@ export type TLoginUser = {
     image: string;
     role: "admin" | "user";
     address: string;
-
+    userType?: "free" | "premium";
+    totalSpends?: number;
 }

@@ -42,6 +42,8 @@ const loginUser = async (payload: TLoginUser) => {
       image: isUserEmailExists.image,
       role: isUserEmailExists.role,
       address: isUserEmailExists.address,
+      userType: isUserEmailExists.userType,
+      totalSpends: isUserEmailExists.totalSpends,
     },
     accessToken,
   };
