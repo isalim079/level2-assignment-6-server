@@ -18,7 +18,7 @@ router.put("/api/users/:email", UserControllers.updateUserInfo)
 router.get("/api/getMe/:email", auth('user', 'admin'), UserControllers.getMeFromDB)
 router.patch("/api/users/:email/userType",  UserControllers.updateUserType)
 router.patch("/api/users/:email/subscriptionInfo",  UserControllers.createSubscriptionInfo)
-router.patch("/api/users/:id/followers", UserControllers.createFollowersData);
-router.delete("/api/users/:userId/followers/:followerId", UserControllers.deleteFollowersData);
+router.patch("/api/users/:userEmail/followers", UserControllers.createFollowersData);
+router.delete("/api/users/:userEmail/followers/:followerEmail", UserControllers.deleteFollowersData);
 
 export const UserRoutes = router;

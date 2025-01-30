@@ -14,7 +14,7 @@ const getAllUserFromDB = async () => {
 };
 
 const getEmailFromUsers = async () => {
-  const result = await User.find().select("email");
+  const result = await User.find().select("email").select("followers");
   return result;
 };
 
@@ -48,17 +48,17 @@ const createSubscriptionInfo = async(email: string, subscriptionInfo: TSubscript
   return result
 }
 
-const createFollowersData = async (id: string, followersInfo: TFollowerInfo) => {
-  const objectId = new Types.ObjectId(id);
-  const followersId = await User.findById(objectId);
+const createFollowersData = async (userEmail: string, followersInfo: TFollowerInfo) => {
+  
+  const followersEmail = await User.findOne({email: userEmail});
 
-  const existingFollowers = followersId?.followers?.find(
+  const existingFollowers = followersEmail?.followers?.find(
     (followers) => followers.email === followersInfo.email
   );
 
   if (!existingFollowers) {
     const result = await User.findOneAndUpdate(
-      { _id: objectId },
+      { email: userEmail },
       { $push: { followers: followersInfo } },
       { new: true }
     );
@@ -67,7 +67,7 @@ const createFollowersData = async (id: string, followersInfo: TFollowerInfo) => 
 
   if (existingFollowers) {
     const result = await User.findOneAndUpdate(
-      { _id: objectId, "upvote.email": followersInfo.email },
+      { email: userEmail, "followers.email": followersInfo.email },
       { $set: { "followers.$.following": followersInfo.following } },
       { new: true }
     );
@@ -75,11 +75,11 @@ const createFollowersData = async (id: string, followersInfo: TFollowerInfo) => 
   }
 };
 
-const deleteFollowersData = async(userId: string, followerId: string) => {
-  const updateFollowersData = await User.findByIdAndUpdate(
-      userId,
+const deleteFollowersData = async(userEmail: string, followerEmail: string) => {
+  const updateFollowersData = await User.findOneAndUpdate(
+      {email: userEmail},
       {
-        $pull: { followers: { _id: followerId } },
+        $pull: { followers: { email: followerEmail } },
       },
       { new: true }
     );

@@ -118,9 +118,9 @@ const createSubscriptionInfo = catchAsync(async (req, res) => {
 
 const createFollowersData = catchAsync(async(req, res) => {
    try {
-      const { id } = req.params;
+      const { userEmail } = req.params;
       const followersInfo = req.body;
-      const result = await userServices.createFollowersData(id, followersInfo);
+      const result = await userServices.createFollowersData(userEmail, followersInfo);
   
       res.status(200).json({
         success: true,
@@ -133,9 +133,9 @@ const createFollowersData = catchAsync(async(req, res) => {
 })
 
 const deleteFollowersData = catchAsync(async (req, res) => {
-    const { userId, followerId } = req.params;
+    const { userEmail, followerEmail } = req.params;
   
-      const result = await userServices.deleteFollowersData(userId, followerId);
+      const result = await userServices.deleteFollowersData(userEmail, followerEmail);
   
       res.status(200).json({
         success: true,
