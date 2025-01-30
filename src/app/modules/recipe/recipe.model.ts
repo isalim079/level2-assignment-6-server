@@ -25,7 +25,7 @@ const downVoteSchema = new Schema<TDownVote>({
 const recipeSchema = new Schema<TRecipe>({
   image: { type: String, required: true },
   title: { type: String, required: true },
-  recipe: { type: String, required: true },
+  recipe: { type: String },
   email: { type: String, required: true },
   name: { type: String, required: true },
   profileImg: { type: String, required: true },

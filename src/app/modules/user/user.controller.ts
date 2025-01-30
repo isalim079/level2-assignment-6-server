@@ -116,6 +116,35 @@ const createSubscriptionInfo = catchAsync(async (req, res) => {
   });
 })
 
+const createFollowersData = catchAsync(async(req, res) => {
+   try {
+      const { id } = req.params;
+      const followersInfo = req.body;
+      const result = await userServices.createFollowersData(id, followersInfo);
+  
+      res.status(200).json({
+        success: true,
+        message: "Followers info saved successfully",
+        data: result,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+})
+
+const deleteFollowersData = catchAsync(async (req, res) => {
+    const { userId, followerId } = req.params;
+  
+      const result = await userServices.deleteFollowersData(userId, followerId);
+  
+      res.status(200).json({
+        success: true,
+        message: "Unfollowed success!",
+        data: result,
+      });
+    
+})
+
 
 export const UserControllers = {
   createUser,
@@ -125,5 +154,7 @@ export const UserControllers = {
   updateUserInfo,
   getMeFromDB,
   updateUserType,
-  createSubscriptionInfo
+  createSubscriptionInfo,
+  createFollowersData,
+  deleteFollowersData
 };

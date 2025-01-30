@@ -7,6 +7,13 @@ export type TSubscriptionInfo = {
     amount: number
 }
 
+export type TFollowerInfo = {
+    following: boolean;
+    name: string;
+    email: string;
+    image: string;
+}
+
 export type TUser = {
     name: string;
     email: string;
@@ -16,6 +23,7 @@ export type TUser = {
     address?: string;
     userType?: "free" | "premium";
     totalSpends?: number;
-    subScriptionInfo?: TSubscriptionInfo[]
+    subScriptionInfo?: TSubscriptionInfo[];
+    followers?: TFollowerInfo[];
 };
 export type TUserRole = keyof typeof USER_ROLE

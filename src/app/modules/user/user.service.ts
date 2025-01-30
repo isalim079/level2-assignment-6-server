@@ -1,4 +1,5 @@
-import { TSubscriptionInfo, TUser } from "./user.interface";
+import { Types } from "mongoose";
+import { TFollowerInfo, TSubscriptionInfo, TUser } from "./user.interface";
 import { User } from "./user.model";
 import bcrypt from "bcrypt";
 
@@ -47,6 +48,45 @@ const createSubscriptionInfo = async(email: string, subscriptionInfo: TSubscript
   return result
 }
 
+const createFollowersData = async (id: string, followersInfo: TFollowerInfo) => {
+  const objectId = new Types.ObjectId(id);
+  const followersId = await User.findById(objectId);
+
+  const existingFollowers = followersId?.followers?.find(
+    (followers) => followers.email === followersInfo.email
+  );
+
+  if (!existingFollowers) {
+    const result = await User.findOneAndUpdate(
+      { _id: objectId },
+      { $push: { followers: followersInfo } },
+      { new: true }
+    );
+    return result;
+  }
+
+  if (existingFollowers) {
+    const result = await User.findOneAndUpdate(
+      { _id: objectId, "upvote.email": followersInfo.email },
+      { $set: { "followers.$.following": followersInfo.following } },
+      { new: true }
+    );
+    return result;
+  }
+};
+
+const deleteFollowersData = async(userId: string, followerId: string) => {
+  const updateFollowersData = await User.findByIdAndUpdate(
+      userId,
+      {
+        $pull: { followers: { _id: followerId } },
+      },
+      { new: true }
+    );
+  
+    return updateFollowersData;
+}
+
 export const userServices = {
   createUserIntoDB,
   getAllUserFromDB,
@@ -55,5 +95,7 @@ export const userServices = {
   updateUserInfo,
   getMeFromDB,
   updateUserType,
-  createSubscriptionInfo
+  createSubscriptionInfo,
+  createFollowersData,
+  deleteFollowersData
 };

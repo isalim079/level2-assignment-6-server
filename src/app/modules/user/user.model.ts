@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { TSubscriptionInfo, TUser } from "./user.interface";
+import { TFollowerInfo, TSubscriptionInfo, TUser } from "./user.interface";
 import config from "../../config";
 import bcrypt from "bcrypt";
 
@@ -9,6 +9,13 @@ const subscriptionInfoSchema = new Schema<TSubscriptionInfo>({
   expiryTime: { type: String },
   amount: { type: Number },
 })
+
+const followerInfoSchema = new Schema<TFollowerInfo>({
+  following: {type: Boolean},
+  name: {type: String},
+  email: {type: String},
+  image: {type: String},
+});
 
 const userSchema = new Schema<TUser>(
   {
@@ -26,6 +33,7 @@ const userSchema = new Schema<TUser>(
     address: { type: String },
     totalSpends: { type: Number, default: 0 },
     subScriptionInfo: { type: [subscriptionInfoSchema]},
+    followers: { type: [followerInfoSchema]},
     userType: { type: String, enum: ["free", "premium"], default: "free" },
     image: { type: String, required: true },
   },
