@@ -44,6 +44,8 @@ const loginUser = async (payload: TLoginUser) => {
       address: isUserEmailExists.address,
       userType: isUserEmailExists.userType,
       totalSpends: isUserEmailExists.totalSpends,
+      subScriptionInfo: isUserEmailExists.subScriptionInfo,
+      followers: isUserEmailExists.followers,
     },
     accessToken,
   };

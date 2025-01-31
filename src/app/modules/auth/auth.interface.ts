@@ -1,3 +1,5 @@
+import { TFollowerInfo, TSubscriptionInfo } from "../user/user.interface";
+
 export type TLoginUser = {
     name: string;
     email: string;
@@ -7,4 +9,6 @@ export type TLoginUser = {
     address: string;
     userType?: "free" | "premium";
     totalSpends?: number;
+    subScriptionInfo?: TSubscriptionInfo[];
+    followers?: TFollowerInfo[];
 }
