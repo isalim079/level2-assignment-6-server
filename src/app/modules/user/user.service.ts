@@ -87,6 +87,12 @@ const deleteFollowersData = async(userEmail: string, followerEmail: string) => {
     return updateFollowersData;
 }
 
+const deleteUserFromDB = async (id: string) => {
+  const objectId = new Types.ObjectId(id);
+  const result = await User.deleteOne(objectId);
+  return result;
+};
+
 export const userServices = {
   createUserIntoDB,
   getAllUserFromDB,
@@ -97,5 +103,6 @@ export const userServices = {
   updateUserType,
   createSubscriptionInfo,
   createFollowersData,
-  deleteFollowersData
+  deleteFollowersData,
+  deleteUserFromDB,
 };

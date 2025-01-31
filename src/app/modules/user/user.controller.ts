@@ -145,6 +145,21 @@ const deleteFollowersData = catchAsync(async (req, res) => {
     
 })
 
+const deleteUserFromDB = catchAsync (async(req, res)=>{
+  
+    const { id } = req.params;
+    const result = await userServices.deleteUserFromDB(id);
+
+    if (result.deletedCount === 1) {
+      res.status(200).json({
+        success: true,
+        message: "User deleted successfully!",
+        data: null,
+      });
+    }
+  
+})  ;
+
 
 export const UserControllers = {
   createUser,
@@ -156,5 +171,6 @@ export const UserControllers = {
   updateUserType,
   createSubscriptionInfo,
   createFollowersData,
-  deleteFollowersData
+  deleteFollowersData,
+  deleteUserFromDB,
 };

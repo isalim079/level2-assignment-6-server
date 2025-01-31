@@ -20,5 +20,6 @@ router.patch("/api/users/:email/userType",  UserControllers.updateUserType)
 router.patch("/api/users/:email/subscriptionInfo",  UserControllers.createSubscriptionInfo)
 router.patch("/api/users/:userEmail/followers", UserControllers.createFollowersData);
 router.delete("/api/users/:userEmail/followers/:followerEmail", UserControllers.deleteFollowersData);
+router.delete("/allUser/delete/:id", auth("admin"), UserControllers.deleteUserFromDB);
 
 export const UserRoutes = router;
